@@ -1,0 +1,20 @@
+9) Obtener el nombre del actor que ha participado en más películas
+SELECT actor.first_name, actor.last_name, COUNT(film_actor.film_id) AS cantidad_peliculas
+FROM actor
+INNER JOIN film_actor ON actor.actor_id = film_actor.actor_id
+GROUP BY actor.actor_id
+ORDER BY cantidad_peliculas DESC
+LIMIT 1;
+Resultado: Gina Degeneres   42
+
+10. Encontrar la dirección del cliente con el mayor número de pagos realizados
+SELECT c.direccion
+FROM Clientes c
+JOIN (
+    SELECT cliente_id, COUNT(*) AS num_pagos
+    FROM Pagos
+    GROUP BY cliente_id
+    ORDER BY num_pagos DESC
+    LIMIT 1
+) AS max_pagos
+ON c.id = max_pagos.cliente_id;
